@@ -770,15 +770,25 @@ import zipfile
 import subprocess
 
 # Download NLTK data (only needed first time)
+# Download NLTK data (only needed first time)
+# Download NLTK data (only needed first time)
 try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
     nltk.download('punkt')
 
+# This will correct the specific punkt_tab error
+try:
+    import nltk.tokenize.punkt
+    # Force punkt tokenizer to load and initialize properly
+    nltk.tokenize.punkt.PunktLanguageVars()
+except:
+    # If that fails, download all tokenizers
+    nltk.download('tokenizers')
 # ---------------------- Page Configuration ----------------------
 st.set_page_config(
     page_title="Real-Time Speech Translator",
-    page_icon="🎙️",
+    page_icon="🎙",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -1224,7 +1234,7 @@ def enhance_translation(text, target_language):
 # ---------------------- UI Components ----------------------
 def render_header():
     """Render the application header"""
-    st.markdown('<h1 class="main-header">Real-Time Speech Translator 🎙️</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">Real-Time Speech Translator 🎙</h1>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle">Powered by Vosk & Google Translate - Free & Offline Speech Translation</p>', unsafe_allow_html=True)
 
 def render_language_selector():
@@ -1303,27 +1313,27 @@ def render_dashboard(selected_language, language_code):
     st.session_state.status_placeholder.markdown('<p>Ready to record</p>', unsafe_allow_html=True)
     
     # Recording button
-    if st.button("🎙️ Record & Translate", use_container_width=True):
+    if st.button("🎙 Record & Translate", use_container_width=True):
         start_time = time.time()
         try:
             # Record audio
             audio_data = record_audio()
             
             # Update status
-            st.session_state.status_placeholder.markdown('<p class="status-processing">⚙️ Transcribing audio with Vosk...</p>', unsafe_allow_html=True)
+            st.session_state.status_placeholder.markdown('<p class="status-processing">⚙ Transcribing audio with Vosk...</p>', unsafe_allow_html=True)
             
             # Transcribe with Vosk
             transcription = transcribe_audio_with_vosk(audio_data)
             
             # Update status
-            st.session_state.status_placeholder.markdown('<p class="status-processing">⚙️ Translating text...</p>', unsafe_allow_html=True)
+            st.session_state.status_placeholder.markdown('<p class="status-processing">⚙ Translating text...</p>', unsafe_allow_html=True)
             
             # Translate text
             translator = GoogleTranslator(source='auto', target=language_code)
             translation = translator.translate(transcription)
             
             # Update status
-            st.session_state.status_placeholder.markdown('<p class="status-processing">⚙️ Enhancing translation...</p>', unsafe_allow_html=True)
+            st.session_state.status_placeholder.markdown('<p class="status-processing">⚙ Enhancing translation...</p>', unsafe_allow_html=True)
             
             # Enhance translation with basic NLP
             enhanced_translation = enhance_translation(translation, selected_language)
@@ -1373,7 +1383,7 @@ def render_dashboard(selected_language, language_code):
         except Exception as e:
             st.session_state.status_placeholder.empty()
             st.markdown(f'<div class="error-notification">❌ Error: {str(e)}</div>', unsafe_allow_html=True)
-            st.markdown('<div class="info-notification">ℹ️ Try again or check if your microphone is working properly.</div>', unsafe_allow_html=True)
+            st.markdown('<div class="info-notification">ℹ Try again or check if your microphone is working properly.</div>', unsafe_allow_html=True)
 
 def render_results():
     """Render translation results and history"""
@@ -1413,7 +1423,7 @@ def render_results():
         
         # Original text
         st.markdown('<div class="result-box">', unsafe_allow_html=True)
-        st.markdown('<p class="result-box-header">🗣️ Original Text:</p>', unsafe_allow_html=True)
+        st.markdown('<p class="result-box-header">🗣 Original Text:</p>', unsafe_allow_html=True)
         st.markdown(f'<p class="result-text">{latest["original_text"]}</p>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
         
@@ -1436,7 +1446,7 @@ def render_results():
                     
                     # Original text
                     st.markdown('<div class="result-box">', unsafe_allow_html=True)
-                    st.markdown('<p class="result-box-header">🗣️ Original Text:</p>', unsafe_allow_html=True)
+                    st.markdown('<p class="result-box-header">🗣 Original Text:</p>', unsafe_allow_html=True)
                     st.markdown(f'<p class="result-text">{hist_item["original_text"]}</p>', unsafe_allow_html=True)
                     st.markdown('</div>', unsafe_allow_html=True)
                     
@@ -1470,7 +1480,7 @@ def main():
         selected_language, language_code = render_language_selector()
         
         # Advanced options
-        with st.expander("⚙️ Advanced Options"):
+        with st.expander("⚙ Advanced Options"):
             st.checkbox("Use offline speech recognition", value=True, disabled=True, 
                        help="Uses Vosk for offline speech recognition")
             st.checkbox("Enhance translation quality", value=True, disabled=True, 
@@ -1482,7 +1492,7 @@ def main():
         render_dashboard(selected_language, language_code)
         
         # Help section
-        with st.expander("ℹ️ How to use"):
+        with st.expander("ℹ How to use"):
             st.markdown("""
             1. Select your target language from the dropdown
             2. Click the "Record & Translate" button
@@ -1490,7 +1500,7 @@ def main():
             4. Wait for processing to complete
             5. View and listen to your translation
             
-            **Note:** The first translation may take longer as the speech recognition model needs to be downloaded.
+            *Note:* The first translation may take longer as the speech recognition model needs to be downloaded.
             """)
         
         st.markdown('</div>', unsafe_allow_html=True)
@@ -1501,7 +1511,7 @@ def main():
     # First-time setup notice
     if not st.session_state.model_loaded and not st.session_state.history:
         st.markdown('<div class="info-notification">', unsafe_allow_html=True)
-        st.markdown('ℹ️ **First-time setup**')
+        st.markdown('ℹ *First-time setup*')
         st.markdown("""
         The first time you use the translator, a speech recognition model (~50MB) will be downloaded.
         This may take a few minutes but only happens once. After that, translations will be much faster.
@@ -1512,5 +1522,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

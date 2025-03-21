@@ -1,0 +1,11 @@
+Flask
+SpeechRecogntion
+streamlit
+SpeechRecognition
+deep-translator
+gtts
+vosk
+nltk
+requests
+tqdm
+numpy
