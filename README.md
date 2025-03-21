@@ -1,49 +1,63 @@
-# 🎙️ Real-time Speech Translator  
-🚀 **A cutting-edge, real-time speech translation app** using **OpenAI Whisper & Cohere**, built with **Streamlit** for an intuitive and sleek user experience.  
+# 🎙️ Real-time Speech Translator
 
-## ✨ Features  
-✅ **Real-time Speech Recognition** with **Whisper**  
-✅ **High-accuracy Translations** powered by **Cohere**  
-✅ **Supports Multiple Languages** (Spanish, French, German, Hindi, etc.)  
+🚀 **A free & offline speech translation app** using **Vosk & Google Translate**, built with **Streamlit** for an intuitive and sleek user experience.
+
+## ✨ Features
+
+✅ **Offline Speech Recognition** with **Vosk**  
+✅ **Translations** powered by **Google Translate**  
+✅ **Supports 16 Languages** (Spanish, French, German, Chinese, etc.)  
 ✅ **Instant Text-to-Speech (TTS)** for translated output  
-✅ **Sleek & Professional UI** with a modern & responsive design  
+✅ **Dark Mode UI** with a modern & responsive design  
+✅ **Translation History** for quick reference  
+✅ **Completely Free** with no API keys required  
 
-## 🔧 Installation  
-### 1️⃣ Clone the Repository  
-```bash  
-git clone https://github.com/yourusername/speech-translator.git  
-cd speech-translator  
+## 🔧 Installation
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/yourusername/speech-translator.git
+cd speech-translator
 ```
 
-### 2️⃣ Install Dependencies  
-```bash  
-pip install -r requirements.txt  
+### 2️⃣ Install Dependencies
+```bash
+pip install streamlit speech_recognition deep-translator gtts vosk nltk requests tqdm numpy
 ```
 
-### 3️⃣ Set Up API Keys  
-Create a **`.env` file** and add your API keys:  
-```env  
-OPENAI_API_KEY=your_openai_api_key  
-COHERE_API_KEY=your_cohere_api_key  
+### 3️⃣ Install FFmpeg (for audio conversion)
+- **Windows**: Download from https://ffmpeg.org/download.html and add to PATH
+- **macOS**: `brew install ffmpeg`
+- **Ubuntu/Debian**: `sudo apt-get install ffmpeg`
+
+### 4️⃣ Run the Application
+```bash
+streamlit run speech_translator.py
 ```
 
-### 4️⃣ Run the Application  
-```bash  
-streamlit run app.py  
-```
+## 🖥️ How to Use
 
-## 🖥️ UI Preview  
-![Speech Translator UI](https://yourimageurl.com/screenshot.png)  
+1. Select your target language from the dropdown
+2. Click the "Record & Translate" button
+3. Speak clearly for up to 7 seconds
+4. Wait for processing to complete
+5. View and listen to your translation
 
-## 🛠️ Tech Stack  
-- **Python**, **Streamlit**  
-- **OpenAI Whisper** for speech-to-text  
-- **Cohere** for language translation  
-- **gTTS (Google Text-to-Speech)**  
-- **Custom UI Design (CSS for modern feel)**  
+*Note:* The first time you use the translator, a speech recognition model (~50MB) will be downloaded.
 
-## 👨‍💻 Developed By  
-**Subrata** 💙 | Passionate about AI, NLP & Cloud Computing  
+## 🛠️ Tech Stack
 
-## 📜 License  
-This project is licensed under the **MIT License**.  
+- **Python**, **Streamlit**
+- **Vosk** for offline speech-to-text
+- **Google Translate** for language translation
+- **gTTS (Google Text-to-Speech)**
+- **NLTK** for text enhancement
+- **Custom UI Design (CSS for dark theme)**
+
+## 👨‍💻 Developed By
+
+**Subrata** 💙 | Passionate about AI, NLP & Cloud Computing
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
